@@ -4,8 +4,8 @@
 const siteMetadata = {
   title: 'CodeCrafting',
   author: 'Kevin Diego',
-  headerTitle: 'TailwindBlog',
-  description: 'Guia prático de como aprender rápido sobre uma tecnologia',
+  headerTitle: 'CodeCrafting',
+  description: 'Explicando de Dev para Dev',
   language: 'pt-br',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
