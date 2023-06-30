@@ -2,61 +2,61 @@
 title: 'Guia de escrita Markdown'
 date: '2023-06-30'
 tags: ['github', 'guide', 'markdown', 'Aaron Swartz']
-draft: true
-summary: 'Guia simples de escrita markdown, como criar de maneira simples e rápida estruturas para Web.'
+draft: false
+summary: 'Guia simples de escrita markdown, como criar de maneira rápida estruturas para Web.'
 ---
 
-# Introduction
+# Introdução
 
-Markdown and Mdx parsing is supported via `unified`, and other remark and rehype packages. `next-mdx-remote` allows us to parse `.mdx` and `.md` files in a more flexible manner without touching webpack.
+A análise Markdown e Mdx é suportada via `unified`, e outros pacotes de remark e rehype. `next-mdx-remote` nos permite analisar arquivos `.mdx` e `.md` de uma maneira mais flexível sem mexer no webpack.
 
-GitHub flavored markdown is used. `mdx-prism` provides syntax highlighting capabilities for code blocks. Here's a demo of how everything looks.
+A marcação com sabor do GitHub é usada. `mdx-prism` fornece recursos de realce de sintaxe para blocos de código. Aqui está uma demonstração de como tudo parece.
 
-The following markdown cheatsheet is adapted from: https://guides.github.com/features/mastering-markdown/
+A seguinte planilha de descontos foi adaptada de:https://guides.github.com/features/mastering-markdown/
 
-# What is Markdown?
+# O que é Markdown?
 
-Markdown is a way to style text on the web. You control the display of the document; formatting words as bold or italic, adding images, and creating lists are just a few of the things we can do with Markdown. Mostly, Markdown is just regular text with a few non-alphabetic characters thrown in, like `#` or `*`.
+Markdown é uma maneira de estilizar texto na web. Você controla a exibição do documento; formatar palavras como negrito ou itálico, adicionar imagens e criar listas são apenas algumas das coisas que podemos fazer com o Markdown. Principalmente, Markdown é apenas um texto regular com alguns caracteres não alfabéticos inseridos, como `#` ou `*`.
 
-# Syntax guide
+# Guia
 
-Here’s an overview of Markdown syntax that you can use anywhere on GitHub.com or in your own text files.
+Aqui está uma visão geral da sintaxe do Markdown que você pode usar em qualquer lugar no GitHub.com ou em seus próprios arquivos de texto.
 
 ## Headers
 
 ```
-# This is a h1 tag
+# Isto é uma tag H1
 
-## This is a h2 tag
+## Isto é uma tag H2
 
-#### This is a h4 tag
+#### Isto é uma tag H4
 ```
 
-# This is a h1 tag
+# Isto é uma tag H1
 
-## This is a h2 tag
+## Isto é uma tag H2
 
-#### This is a h4 tag
+#### Isto é uma tag H4
 
 ## Emphasis
 
 ```
-_This text will be italic_
+_Adicionando efeito itálico_
 
-**This text will be bold**
+**Adicionando efeito negrito**
 
-_You **can** combine them_
+_Podemos **também** combinar as estilizações_
 ```
 
-_This text will be italic_
+_Adicionando efeito itálico_
 
-**This text will be bold**
+**Adicionando efeito negrito**
 
-_You **can** combine them_
+_Podemos **também** combinar as estilizações_
 
-## Lists
+## Listas
 
-### Unordered
+### Não ordenada
 
 ```
 - Item 1
@@ -70,7 +70,7 @@ _You **can** combine them_
   - Item 2a
   - Item 2b
 
-### Ordered
+### Ordenada
 
 ```
 1. Item 1
@@ -86,7 +86,7 @@ _You **can** combine them_
    1. Item 3a
    1. Item 3b
 
-## Images
+## Imagens
 
 ```
 ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
@@ -105,33 +105,31 @@ http://github.com - automatic!
 http://github.com - automatic!
 [GitHub](http://github.com)
 
-## Blockquotes
+## Blocos
 
 ```
-As Kanye West said:
+Motivos da reúnião:
 
-> We're living the future so
-> the present is our past.
+> Metas anuais.
+> Alinhamento do novo processo.
 ```
 
-As Kanye West said:
+Motivos da reúnião:
 
-> We're living the future so
-> the present is our past.
+> Metas anuais.
+> Alinhamento do novo processo.
 
-## Inline code
+## Código em linha
 
 ```
-I think you should use an
-`<addr>` element here instead.
+Precisamos conclúir aquela <strong>Sprint</strong> dentro do prazo previsto.
 ```
 
-I think you should use an
-`<addr>` element here instead.
+Precisamos conclúir aquela <strong>Sprint</strong> dentro do prazo previsto.
 
-## Syntax highlighting
+## Sintaxe highlighting
 
-Here’s an example of how you can use syntax highlighting with [GitHub Flavored Markdown](https://help.github.com/articles/basic-writing-and-formatting-syntax/):
+Guia completo [GitHub Flavored Markdown](https://help.github.com/articles/basic-writing-and-formatting-syntax/):
 
 ````
 ```js:fancyAlert.js
@@ -143,7 +141,7 @@ function fancyAlert(arg) {
 ```
 ````
 
-And here's how it looks - nicely colored with styled code titles!
+E aqui está como fica - bem colorido com títulos de código estilizados!
 
 ```js:fancyAlert.js
 function fancyAlert(arg) {
@@ -153,46 +151,46 @@ function fancyAlert(arg) {
 }
 ```
 
-## Footnotes
+## Notas de rodapé
 
 ```
-Here is a simple footnote[^1]. With some additional text after it.
+Aqui está uma nota de rodapé simples[^1]. Com algum texto adicional depois dele.
 
-[^1]: My reference.
+[^1]: Minha referência.
 ```
 
-Here is a simple footnote[^1]. With some additional text after it.
+Aqui está uma nota de rodapé simples[^1]. Com algum texto adicional depois dele.
 
-[^1]: My reference.
+[^1]: Minha referência.
 
-## Task Lists
-
-```
-- [x] list syntax required (any unordered or ordered list supported)
-- [x] this is a complete item
-- [ ] this is an incomplete item
-```
-
-- [x] list syntax required (any unordered or ordered list supported)
-- [x] this is a complete item
-- [ ] this is an incomplete item
-
-## Tables
-
-You can create tables by assembling a list of words and dividing them with hyphens `-` (for the first row), and then separating each column with a pipe `|`:
+## Lista de tarefas
 
 ```
-| First Header                | Second Header                |
+- [x] Criar componente de rotas
+- [x] Criar Footer da aplicação
+- [ ] Fazer o commit das alterações
+```
+
+- [x] Criar componente de rotas
+- [x] Criar Footer da aplicação
+- [ ] Fazer o commit das alterações
+
+## Tabelas
+
+Você pode criar tabelas reunindo uma lista de palavras e dividindo-as com hífens `-` (para a primeira linha) e, em seguida, separando cada coluna com uma barra vertical `|`:
+
+```
+| Primeiro                | Segundo                 |
 | --------------------------- | ---------------------------- |
-| Content from cell 1         | Content from cell 2          |
-| Content in the first column | Content in the second column |
+| Conteúdo da célula 1       | Conteúdo da célula 2          |
+| Conteúdo da primeira coluna | Conteúdo da segunda coluna |
 ```
 
-| First Header                | Second Header                |
+| Primeiro                | Segundo                 |
 | --------------------------- | ---------------------------- |
-| Content from cell 1         | Content from cell 2          |
-| Content in the first column | Content in the second column |
+| Conteúdo da célula 1       | Conteúdo da célula 2          |
+| Conteúdo da primeira coluna | Conteúdo da segunda coluna |
 
-## Strikethrough
+## Tachado
 
-Any word wrapped with two tildes (like `~~this~~`) will appear ~~crossed out~~.
+Qualquer palavra com dois tils (como `~~this~~`) aparecerá ~~riscada~~.
