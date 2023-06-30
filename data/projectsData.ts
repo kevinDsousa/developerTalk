@@ -1,20 +1,52 @@
 const projectsData = [
-  // {
-  //   title: 'Teste',
-  //   description: `What if you could look up any information in the world? Webpages, images, videos
-  //   and more. Google has many features to help you find exactly what you're looking
-  //   for.`,
-  //   imgSrc: '/static/images/google.png',
-  //   href: 'https://www.google.com',
-  // },
-  // {
-  //   title: 'The Time Machine',
-  //   description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-  //   to the desired date and press "Go". No more worrying about lost keys or
-  //   forgotten headphones with this simple yet affordable solution.`,
-  //   imgSrc: '/static/images/time-machine.jpg',
-  //   href: '/blog/the-time-machine',
-  // },
+  {
+    title: 'Easy room',
+    description: `Protótipo criado atraves de um hackathon na qual a solução se baseia em um gerenciamento de salas para empresas.`,
+    imgSrc: '/static/images/easyRoom.png',
+    href: 'https://github.com/EasyRoomCompany/Guardian',
+  },
+  {
+    title: 'In Progress',
+    description: `Promovido pelo meu mentor Abraão, criamos um software que será capaz de contabilizar toda atividades dos alunos cadastrados para fins de ver o progresso de cada um.`,
+    imgSrc: '/static/images/inProgress.png',
+    href: 'https://github.com/dcTeam7/in_progress',
+  },
+  {
+    title: 'Drip Store',
+    description: `Criado pela turma FS15 da Digital College, estamos nosso modelo e-commerce onde a loja será capaz de realizar todo processo ate as validações de compra.`,
+    imgSrc: '/static/images/dripStore.png',
+    href: 'https://github.com/dcTeam15/Drip-Store',
+  },
+  {
+    title: 'Calen Dog',
+    description: `Promovido pelo meu mentor Abraão, pensamos em uma solução onde liga um pai de pet e empresas de cuidados com animais onde esta interface poderá ser capaz de agendar os cuidados de seu bixinho.`,
+    imgSrc: '/static/images/calenDog.png',
+    href: 'https://github.com/dcTeam7/CalenDog',
+  },
+  {
+    title: 'Digital Burger',
+    description: `Primeiro desafio proposto pela digital college, eu e meu time criamos um cardápio virtual onde o usuário poderá escanear o QRcode para poder visualizar todos os produtos.`,
+    imgSrc: '/static/images/digitalBurger.png',
+    href: 'https://kevindsousa.github.io/digital_burger/',
+  },
+  {
+    title: 'Tasks List',
+    description: `Criado para entender o funcionamento do Hook useReducer desenvolvi este projetinho onde o usuário pe capaz de adicionar uma lita de tarefas e marcar como concluídas conforme finalizado.`,
+    imgSrc: '/static/images/tasksList.png',
+    href: 'https://kevindsousa.github.io/TasksList/',
+  },
+  {
+    title: 'Encriptador de mensagens',
+    description: `Desafio proposto pela Alura no modulo de lógica, criei esta interface que funciona como um encriptador de mensagens.`,
+    imgSrc: '/static/images/encriptMessage.png',
+    href: 'https://kevindsousa.github.io/encriptador_de_mensagens/',
+  },
+  {
+    title: 'Hash',
+    description: `Proposto pela Digital College criei um jogo da velha onde batizei pelo nome de Hash.`,
+    imgSrc: '/static/images/hashLayout.png',
+    href: 'https://kevindsousa.github.io/Hash/',
+  },
 ]
 
 export default projectsData
