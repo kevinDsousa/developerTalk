@@ -8,8 +8,8 @@ const siteMetadata = {
   description: 'Explicando de Dev para Dev',
   language: 'pt-br',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://developer-talk.vercel.app/',
+  siteRepo: 'https://github.com/kevinDsousa/developerTalk',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',

@@ -1,0 +1,354 @@
+---
+title: 'Não se perda com typescript'
+date: '2023-06-30'
+tags: ['typescript', 'guide']
+draft: true
+summary: 'Crie aplicações a prova dos seus possiveis erros'
+---
+
+# Observações importantes
+
+Este artigo tem finalidades de facilitação para os iniciantes da tecnologia como eu, minha ideia é mostrar de um ponto de vista mais simples possível. A ideia desde artigo é abranger desde a instalação até a criação de seus primeiros contratos.
+
+Toda referência deste conteúdo foi baseado na documentação oficial e támbem aos videos da [@glauciaLemos](https://www.youtube.com/watch?v=u7K1sdnCv5Y&list=PLb2HQ45KP0Wsk-p_0c6ImqBAEFEY-LU9H) onde ela explica e conta mais detalhes de como usar.
+
+Outra detalhe é que este artigo será abordado a parte introdutoria, então muitos conceitos ainda serão abordados nos proximos artigos.
+
+# Introdução
+
+Desenvolvido pela microsoft e sendo mantida pela comunidade, typescript é o superpoder do javascript onde é usando contratos para descrever alguns elementos de codigo, criamos uma forma de fechar o cerco e evitar possiveis erros de compilação no desenvolvimento de sistemas.
+
+# Aprender e práticar
+
+Oficialmente você pode acessar a documentação do **[typescript](https://www.typescriptlang.org/)** e aprender como fazer o uso deste superset.
+
+Para práticar acesse o **[playground](https://www.typescriptlang.org/play?#code/)**.
+
+# Requisitos
+
+Você precisa ter algumas ferramentas já instaladas em sua máquina para poder usufruir desde superset.
+
+- [`nodejs` ](https://nodejs.org/en) - Ambiente de execução que permite escrever Javascript na sua máquina.
+- [`typescript`](https://www.typescriptlang.org/) - Instalado em sua máquina.
+- [`VScode`](https://code.visualstudio.com/) - Editor de código. _obs: Qualquer editor pode ser usado._
+
+# Tsconfig.json
+
+Por padrão todo projeto typescript precisa desde arquivo para que possamos descrever algumas informações relevantes para o software que foi constuído usando typescript.
+
+- Usando a propriedade `files`
+
+```ts
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true
+  },
+  "files": [
+    "core.ts",
+    "sys.ts",
+    "types.ts",
+    "scanner.ts",
+    "parser.ts",
+    "utilities.ts",
+    "binder.ts",
+    "checker.ts",
+    "emitter.ts",
+    "program.ts",
+    "commandLineParser.ts",
+    "tsc.ts",
+    "diagnosticInformationMap.generated.ts"
+  ]
+}
+```
+
+- Usando as propriedades `include` e `exclude`
+
+```ts
+{
+  "compilerOptions": {
+    "module": "system",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "../../built/local/tsc.js",
+    "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
+```
+
+## Gerar o Tsconfig.json
+
+No terminal é possível criamos um default deste arquivo digitando o comando `tsc --init`
+
+Aqui podemos informar diversas configurações desde a versão que o Ecmascript será compilado ate onde iremos gerar os arquivos apos compilação.
+Para mais detalhes sobre cada key de configuração acesse [Tsconfig](https://www.typescriptlang.org/pt/docs/handbook/tsconfig-json.html).
+
+# Transpilação
+
+É importante lembrar que por padrão o browser não reconhece typescript, precisamos realizar a transpilação de todo arquivo para javascript. Para realizar tal processo podemos ir no terminal e rodar o seguinte comando `tsc` + [nome do arquivo].
+
+## Mas isso não é perda de tempo?
+
+Uma coisa que pode estar se perguntando agora é que fazer tudo isso para definir padrões em seu projeto, escrever um pouco mais não seria perda de tempo? visto que se eu me preocupar em passar todos os valores certos o código deveria funcionar?
+
+Nesse caso sim, mas vale lembrar nos programadores não trabalhamos sozinhos e eventualmente alguem pode acabar errando na criação de algo e gerando problemas para toda aplicação, a ideia do typescript e que atraves do proprio codigo que você escreve ele seja aprova de seus erros e do seu time também. **Ele não vai deixar você fazer 💩** e nem o juninho 😂
+
+# Type Annotation
+
+Por padrão o type annotation é onde ajuda o compilador a entender as variáveis e seus valores, você não é obrigado a usa-lo mas caso não, o uso de typescript perde o sentido, já que é exatamente assim que ele entende e te auxilia a captar erros em seu codigo.
+
+# Diferenças do typescript
+
+**Usando javascript nativo**
+
+```js
+let mensagem = 'Hello World, Kevin Diego'
+console.log(mensagem)
+```
+
+**Usando typescript**
+
+```ts
+let mensagem: string = 'Hello World, Kevin Diego'
+console.log(mensagem)
+```
+
+Como mostra no exemplo acima, a mais notável diferença para quem ja tem um conhecimento prévio de `javascript`, é que sempre que formos definir alguma variável ou constantes precisaremos támbem dizer qual tipo dela. Sendo assim caso a variável receba um valor diferente do previsto o typescript reclama informando que exite algo incoerente.
+
+exemplo:
+
+**Usando typescript**
+
+```ts
+let mensagem: string = 32
+console.log(mensagem)
+```
+
+Neste caso mesmo que você queira, seus sistema não vai funcionar pois a variável mensagem que segundo typescript deveria ser um tipo `string` foi atribuido um valor `number` gerando assim um log bem bonito na tua cara.
+
+lembrando que:
+
+**Usando typescript**
+
+```ts
+let mensagem: string = '32'
+console.log(mensagem)
+```
+
+Caso este número esteja entre aspas, a stuação ja muda pois não estamos tratando ele bom um valor `number`.
+
+outros exemplos:
+
+**Arrays**
+
+```ts
+let animais: string[] = ['Elefante', 'Cachorro', 'Gato', 'Panda', 'Girafa', 'Leão']
+console.log(animais)
+```
+
+**Objetos**
+
+```ts
+let carro: {
+  nome: string
+  ano: number
+  preco: number
+}
+
+carro = { nome: 'Toyota Yaris Sedan XS', ano: 2019, preco: 80000 }
+console.log(carro)
+```
+
+**Funções**
+
+```ts
+function multiplicarNumero(num1: number, num2: number) {
+  return num1 * num2
+}
+
+console.log(multiplicarNumero(2, 5))
+```
+
+---
+
+# Tipos no typescript
+
+![Hierarquia](https://pbs.twimg.com/media/EudXrbDXUAQPV2P?format=jpg&name=medium)
+
+## boolean
+
+Tipo primitivo que permite somente dois valores `true` ou `false`
+
+exemplos:
+
+```ts
+let theme: boolean = true
+
+console.log(theme)
+```
+
+```ts
+let concluido: boolean = false
+
+if (!concluido) {
+  console.log('Tarefa foi concluída com sucesso!')
+} else {
+  console.log('Tarefa Pendente!')
+}
+```
+
+Vale lembrar que Boolean não é boolean.
+Boolean -> é um tipo `Object`, recomenda-se que sempre usemos tipos primitivos para declaração de variáveis no typescript.
+
+## number e bigint
+
+Tipos que representa números e todas suas variáveis
+
+exemplos:
+
+```ts
+let num1: number = 23.0
+let num2: number = 0x78cf
+let num3: number = 0o577
+let num4: number = 0b110001
+
+console.log('Number - Ponto Flutuante...: ', num1)
+console.log('Number - Hexadecimal...: ', num2)
+console.log('Number - Octal...: ', num3)
+console.log('Number - Binário...: ', num4)
+```
+
+Neste primeiro caso podemos usar o number para representar números **inteiros** **negativos** **flutuantes** **positivos** **inifinitos** ou até mesmo **Nan**.
+
+```ts
+let big1: bigint = 9007199254740991n
+let big2: bigint = 0b100000000000000000000000000000000000000000000000000011n
+let big3: bigint = 0x20000000000003n
+let big4: bigint = 0o400000000000000003n
+
+console.log('Bigint...: ', big1)
+console.log('Bigint - Binário...: ', big2)
+console.log('Bigint - Hexadecimal...: ', big3)
+console.log('Bigint - Octal...: ', big4)
+```
+
+Lançado no typescript em sua versão [3.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-2.html) no Ecmascript2020 ou ESNext, permite trabalhar com números inteiros maiores sem ter muitas possibilidades de erros de arrendondamento.
+
+## string
+
+Como no **javascript** o tipo string serve para armazenamento de texto podendo ser tanto com aspas simples como em aspas duplas. Também exite o objeto **String** como no number, mas da mesma forma, precisamos definir os tipos de maneira primitiva.
+
+exemplos:
+
+```ts
+let nomeCompleto: string = 'Kevin Sousa'
+let funcaoEmpresa: string = 'Analista de redes FTTH NOC'
+console.log(nomeCompleto)
+console.log(funcaoEmpresa)
+```
+
+```ts
+let nomeEmpresa: string = 'Alares'
+
+let dadosFuncionario: string = `Seja bem-vinda ${nomeCompleto}! Você será ${funcaoEmpresa} 
+    na empresa ${nomeEmpresa}`
+
+console.log(dadosFuncionario)
+```
+
+## array
+
+Basicamente é uma lista ordenada de dados, todo array começa com ```0``` , para typescript precisamos definir seu tipo ao inicializar.
+
+exemplos:
+
+```ts
+let frutas: string[] = ['🍍', '🍊', '🍎', '🍉', '🥭']
+let frutas1: Array<string> = ['🍍', '🍊', '🍎', '🍉', '🥭']
+console.log(frutas[2])
+console.log(frutas1[3])
+```
+Neste exemplo ```frutas``` é um array de strings vazio, e ```frutas1``` é um Objeto Array de string.
+
+
+```ts
+let idiomas: Array<string> = ['Português', 'Inglês', 'Espanhol', 'Francês']
+idiomas.push('Mandarim')
+idiomas.push('Italiano')
+
+console.log(idiomas)
+console.log(idiomas)
+console.log(idiomas)
+```
+Na prática, não há diferença de uso entre o primitivo string[] e o tipo genérico Array. Ambas as declarações são usadas para definir um array de strings em TypeScript.
+
+Ambos os tipos podem ser usados para definir arrays de strings e oferecem as mesmas funcionalidades e métodos de array. A escolha entre os dois formatos é uma questão de preferência pessoal. Algumas pessoas podem preferir a sintaxe mais concisa string[], enquanto outras podem preferir a sintaxe genérica Array. O resultado é o mesmo em ambos os casos.
+
+```ts
+let listaNumeros = [0, 1, 2, 3, 4, 5];
+listaNumeros = [...listaNumeros, 6, 7, 8, 9, 10];
+
+console.log(listaNumeros);
+```
+Neste exemplo usamos o spreadoperator para desestruturar a variável e atualizar os valores.
+
+```ts
+let linguagensArray:string[] = new Array('JavaScript', 'Python', 'PHP', 'C#');
+
+function funcaoLinguagens(linguagens:string[]) {
+    for (let i = 0; i < linguagens.length; i++) {
+        console.log(linguagensArray[i]); 
+    }
+}
+
+funcaoLinguagens(linguagensArray);
+```
+Com funções com parametros precisamos definir também os valores que serão retornados.
+
+## tuple
+
+Tupla é um tipo de armazenamento derivado de arrays que pode ser colocado varios tipos, com tuple é possivel.
+
+```ts
+let pessoa: [string, string, number];
+
+let pessoa2: [nome: string, posicao: string, idade: number]
+pessoa = ['Kevin Sousa', 'Analista de redes', 34];
+```
+Note que ao definir a variavel realizamos sua tipagem conforme a posição dos valores.
+Podemos também fazer o uso de labels na inicialização da variavel.
+
+```ts
+let listaFrutas: [string, ...string[]] = ['🍍', '🍊', '🍎', '🍉', '🥭'];
+console.log(...listaFrutas);
+```
+Neste exemplo o uso de spreadoperator também é possivel para o uso de tuplas para acessar os valores.
+a primeira atribuição do string serve para dizer que a tupla é de string e usando o spreadoperator ele assume que os demais valores da tupla seja também strings, a fim de evitar ficar escrevendo string para cada tipagem.
+
+```ts
+function listarPessoas(nomes: string[], idades: number[]) {
+    return [...nomes, ...idades];
+}
+
+let resultado = listarPessoas(['Glaucia', 'Jurema'], [34, 68]);
+console.log(resultado)
+```
+
+```ts
+type Nome = 
+        | [primeiroNome: string, sobrenome: string]
+        | [primeiroNome: string, nomeMeio: string, sobrenome: string]
+
+function criarPessoa(...nome: Nome) {
+    return [...nome];
+}
+
+console.log(criarPessoa('Glaucia', 'Lemos'));
+console.log(criarPessoa('Glaucia', 'de Souza', 'Lemos'));
+```
