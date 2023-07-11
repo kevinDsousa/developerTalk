@@ -1,0 +1,218 @@
+---
+title: 'Storybook - Documente seus componentes'
+date: '2023-07-11'
+tags: ['React', 'Storybook', 'UI', 'Typescript', 'MDX']
+draft: false
+summary: 'Crie documentações interativas sem interferência de outros componentes usando storybook.'
+---
+
+# Observações importantes
+
+Este artigo tem finalidades de facilitação para os iniciantes da tecnologia, como eu. Minha ideia é mostrar de um ponto de vista mais simples possível. A ideia deste artigo é abranger desde a instalação, configuração até a criação das suas primeiras histórias.
+
+# Indicações
+
+[Documentação oficial](https://storybook.js.org/)
+
+[Escrevendo com MDX](https://storybook.js.org/docs/6.5/react/writing-docs/mdx)
+
+[Show case](https://storybook.js.org/showcase)
+
+[Addons essenciais](https://storybook.js.org/docs/react/essentials/introduction)
+
+[Como documentar códigos? Documentando Front End com Storybook!
+](https://www.youtube.com/watch?v=R41_Qedrzik)
+
+[Documentando seu front-end com Storybook (projeto real)](https://www.youtube.com/watch?v=VmPbKj3uekE)
+
+# Introdução
+
+O Storybook é uma ferramenta popular para o desenvolvimento de interfaces de usuário (UI) em **JavaScript**. Ele foi criado por [Dominic Nguyen](https://github.com/domyen) e [Tom Coleman](https://github.com/tmeasday), dois desenvolvedores de software, em *2015*. O objetivo principal do Storybook é permitir que os desenvolvedores criem e visualizem componentes de UI de forma isolada, independentemente do aplicativo em que estão sendo usados.
+
+O Storybook é uma ferramenta de desenvolvimento de UI centrada em componentes. Ele permite que os desenvolvedores criem histórias, que são pequenas unidades independentes que descrevem como um componente deve ser renderizado em diferentes estados e casos de uso. Essas histórias podem ser facilmente navegadas e visualizadas em um ambiente separado, fornecendo uma visão abrangente das capacidades do componente.
+
+Uma das principais vantagens do Storybook é a capacidade de desenvolver e testar componentes de forma isolada, sem a necessidade de executar o aplicativo completo. Isso permite que os desenvolvedores iterem rapidamente no design e comportamento dos componentes, acelerando o processo de desenvolvimento e melhorando a qualidade do código.
+
+Além disso, o Storybook oferece suporte a uma ampla variedade de frameworks e bibliotecas populares, como React, Vue.js e Angular, tornando-o uma escolha flexível para equipes de desenvolvimento em diferentes tecnologias.
+
+No geral, o Storybook se tornou uma ferramenta essencial no desenvolvimento de UI, permitindo que os desenvolvedores criem, documentem e testem componentes de forma rápida e eficiente, melhorando a colaboração e a qualidade do código em projetos de desenvolvimento de software.
+
+# Instalação
+
+```bash
+npx storybook@latest init
+```
+Apos instalação você pode verificar que foram criados alguns arquivos de configuração e histórias.
+Para confirmar se tudo deu certo você precisa realizar o comando ```npm run storybook``` e inicializar a interface dele.
+
+![Storybook tela inicial](https://storybook.js.org/dfc8027481b32b2adaad77828e18eb55/example-welcome.png)
+
+# manager.js
+
+Manager.js é um arquivos de configuração onde pode ser passados algumas informações de plugins para o storybook. Este arquivo deve ser criado dentro de .storybook
+
+```js
+import { addons } from "@stoybook/addons"
+import { themes } from "@stoybook/theming"
+
+addons.setConfig({
+    theme: theme.dark
+})
+```
+Neste exemplo o storybook permite que o thema dark seja alterado.
+
+# preview.js
+
+Arquivo responsável por carregar as informações do storybook de forma global
+
+```js
+import { themes } from "@storybook/theming"
+import '../src/global.css'
+import type { Preview } from "@storybook/react";
+
+const preview: Preview = {
+  parameters: {
+    actions: { argTypesRegex: "^on[A-Z].*" },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+  },
+  docs: themes.dark, // Adiciona thema dark para a parte de docs
+};
+
+export default preview;
+```
+
+Neste exemplo estou fazendo o uso de um CSS global sendo carregado neste arquivo.
+
+# Sua primeira história
+
+Para criação de um arquivo de histórias, devemos criar um arquivo contendo o sufixo ```.stories.mdx``` ou ```.stories.tsx``` a forma de escrever entre markdown e typescript pode variar um pouco, então caso tenha dúvidas verifique a documentação oficial.
+
+Nesta demonstração usuarei o modelo typescript pois podemos realizar testes automatizados em cima do proprio storybook para garantir uma verificação a mais de pureza dos componentes e de que estão funcionando com qualidade.
+
+```tsx
+import { Meta, StoryObj } from '@storybook/react'
+import { Header } from '../../components/Header'
+
+export default {
+    title: 'Components/Header',
+    component: Header,
+} as Meta
+
+export const Default: StoryObj = {
+
+}
+```
+Os componentes Meta e StoryObj são responsáveis para realizar a tipagem do default e das histórias conforme o código acima.
+
+## Mas e se eu quiser criar uma história de um componente que depende de outro componente? É possivel?
+
+Neste caso precisamos realizar um tipo de emulação para que a aplicação entenda através de ```decorators```, uma forma de adicionar contexto para nossos componentes.
+
+```tsx
+import { Meta, StoryObj } from '@storybook/react'
+import { Header } from '../../components/Header'
+
+export default {
+    title: 'Components/Header',
+    component: Header,
+    args: {
+        /**
+         * Todos os argumentos que se espera receber
+         */
+    }
+    decorators: [
+        (story) => {
+            return(
+                /**
+                 * Informar o(s) componente(s) de envolvimento
+                 * {Story()} Precisa passar desta forma para não perder a referência
+                 */
+            )
+        }
+    ]
+} as Meta//<Props> Passar a tipagem para Meta
+
+export const Default: StoryObj/*<Props> Passar a tipagem para StoryObj*/ = {
+    args: {
+        // Informar seus argumentos isolados
+        // ex: title: 'teste123'
+    }
+}
+```
+
+## Mas se meu componente estiver fazendo uma chamada para uma API?
+
+Automágicamente você ganhará um console de error referênte a requisição realizada, pois o storybook não é capaz de realziar requisições. Visto isso foi criado uma bibliote que resolve exatamente isto [mock service worker](https://storybook.js.org/addons/msw-storybook-addon). 
+
+após instalado realize o comando ```npx msw init public/``` para que ele salve na página public "no caso do vite", caso não esteja usando vite você deverá trocar para sua pasta publica.
+
+```js
+import { initialize, mswLoader } from 'msw-storybook-addon';
+
+// Iniciando o MSW
+initialize();
+
+const preview = {
+  parameters: { 
+    // ...
+  },
+  // ...
+  loaders: [mswLoader],
+}
+
+export default preview
+```
+
+Adicione estas linhas em seu arquivo de preview.
+
+apos realizar toda a configuração dentro do componente de história você sera capaz de passar o argumento de ```parameters``` para usar o ```msw```ficando assim...
+
+```tsx
+import { Meta, StoryObj } from '@storybook/react'
+import { Header } from '../../components/Header'
+import { rest } from 'msw'
+
+export default {
+    title: 'Components/Header',
+    component: Header,
+    args: {
+        /**
+         * Todos os argumentos que se espera receber
+         */
+    },
+    parameters: {
+        msw: {
+            handlers: [
+                // rest.post('/projects', (req, res  ) => {
+                    // Retorno da resposta
+                })
+            ]
+        }
+    }
+    decorators: [
+        (story) => {
+            return(
+                /**
+                 * Informar o(s) componente(s) de envolvimento
+                 * {Story()} Precisa passar desta forma para não perder a referência
+                 */
+            )
+        }
+    ]
+} as Meta//<Props> Passar a tipagem para Meta
+
+export const Default: StoryObj/*<Props> Passar a tipagem para StoryObj*/ = {
+    args: {
+        // Informar seus argumentos isolados
+        // ex: title: 'teste123'
+    }
+}
+```
+# Conclusão
+
+Para aplicações que exigem um pouco mais de refino, usar o Storybook para criar a documentação de seu projeto pode ser uma boa opção para ajudar os desenvolvedores que virão a ter uma boa referência de como poder usar cada componente do software. Nele é possível realizar inúmeras estilizações que podem deixar mais polido seus stories.

@@ -1,7 +1,15 @@
 import Image from './Image'
 import Link from './Link'
 
-const Card = ({ title, description, imgSrc, href }) => (
+interface Props {
+  title: string
+  description: string
+  imgSrc: string
+  href: string
+  images: string
+}
+
+const Card = ({ title, description, imgSrc, href, images }: Props) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
@@ -45,7 +53,16 @@ const Card = ({ title, description, imgSrc, href }) => (
             className="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label={`Link to ${title}`}
           >
-            Saiba mais &rarr;
+            Saiba mais 🔍
+          </Link>
+        )}
+        {images && (
+          <Link
+            href={images}
+            className="pl-10 text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+            aria-label={`Link to ${title}`}
+          >
+            Imagens 📷
           </Link>
         )}
       </div>
