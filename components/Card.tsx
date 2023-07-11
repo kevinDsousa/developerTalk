@@ -6,7 +6,7 @@ interface Props {
   description: string
   imgSrc: string
   href: string
-  images: string
+  images?: string
 }
 
 const Card = ({ title, description, imgSrc, href, images }: Props) => (
