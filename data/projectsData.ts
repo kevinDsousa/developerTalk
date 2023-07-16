@@ -1,5 +1,11 @@
 const projectsData = [
   {
+    title: 'LinkTree',
+    description: `Projeto criado com Nextjs e Prismic para fins de estudo, criei uma simples interface e integrei com o CMS para que as alterações do código pudessem ser feitas sem permitir interação do usuário com o código.`,
+    imgSrc: '/static/images/nextprismic.png',
+    href: 'https://link-tree-khaki.vercel.app/',
+  },
+  {
     title: 'Easy room',
     description: `Protótipo criado atraves de um hackathon na qual a solução se baseia em um gerenciamento de salas para empresas.`,
     imgSrc: '/static/images/easyRoom.png',
