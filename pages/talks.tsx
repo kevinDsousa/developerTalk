@@ -25,7 +25,7 @@ export default function Talks() {
                 description={d.description}
                 imgSrc={d.imgSrc}
                 href={d.href}
-                images={d.images}
+                // images={d.images}
               />
             ))}
           </div>
