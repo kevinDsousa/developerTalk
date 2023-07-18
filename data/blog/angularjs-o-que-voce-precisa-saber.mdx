@@ -1,0 +1,92 @@
+---
+title: 'O que você precisa saber do AngularJS'
+date: '2023-07-19'
+tags: ['Angular', 'Guide', 'Componentes', 'Framework']
+draft: false
+summary: 'Começe em Angular.'
+---
+
+![](https://angularjs.org/img/angularjs-for-header-only.svg)
+
+# Observações importantes
+
+Este artigo tem finalidades de facilitação para os iniciantes da tecnologia como eu, minha ideia é mostrar de um ponto de vista mais simples possível. Estou aprendendo Angular e na medida que for solidificando meus conhecimentos, registrarei atraves deste Blog
+
+# Indicações
+
+[Documentação Angularjs](https://angularjs.org/)
+
+# Introdução
+
+AngularJS é um Framework para o desenvolvimento de aplicações baseadas em **javascript**, permite estruturar camadas, criação de componentes reutilizáveis permitindo estruturar uma apliação bem colocada. Angularjs permite integração fácil com backend sem precisar instalar bibliotecas e além disto permite facilitações em momentos de testes.
+
+# Criação
+
+Criado por [Miško Hevery](https://github.com/mhevery) e [Adam Abrons](https://github.com/abrons) em 2009, com objetivo de facilitar criações de aplicações web com foco em redução de escrita de código, angularjs ficou muito famoso pelos desenvolvedores do google, apesar de que ele inicialmente não foi criado pela empresa.
+
+Atualmente mantido pelo google, angular  possui uma comunidade extremamente forte mantendo assim sua popularidade de desenvolvedores.
+
+# Diferença do Angular para os demais
+
+Você escreve tudo em javascript, o framework mantem seu total foco em sua construção, então não há necessidade de ficar transpilando grande maioria do código gerado.
+
+Sua performace se dá baseado no próprio cliente, então devemos ter cuidado em casos mais complexos pode acabar gerando uma experiência não muito boa do usuário. Outra coisa importante dizer é que todo código gerado é minificado, então há uma redução entre 30 há 40% do código, gerando uma fluidez melhor de seus sistemas.
+
+# Serapação de responsabilidades
+
+Angular possui uma separação de tarefas organizados em 3 entidades para separação de responsabilidades.
+
+## View
+
+É a representação visual do componente, definida em um template, exibindo os dados e interações para o usuário final.
+
+## Scope
+
+Define a visibilidade e o tempo de vida das variáveis e funções em um componente, podendo ser local ou compartilhado entre componentes relacionados.
+
+## Controler
+
+Gerencia a lógica de negócio e a interação com os dados em um componente ou aplicação.
+
+# Hello Angular World
+
+Acessando a [Documentação](https://angularjs.org/) e baixando sua versão
+
+- Após download do arquivo crie um **HTML** simples na mesma pasta onde contém o arquivo *angular*
+
+- Adicione o importe do script ```angular.js```
+
+- Adicione na tag **html** uma diretiva chamada *ng-app*. Esta tag pode estar em outras mas é mais comum que esteja no **html**.
+
+- Criando um script ```angular.module("hello world", [])``` é aqui onde fazemos a injeção dos modulos, podendo colocar compontentes, diretivas e filtros.
+
+- Crie um controller ```angular.module("hello world")...``` desta forma o angular já entende que você esta localizando um modulo
+
+- Passando um ```$scope``` como parametro de função será, definimos a porta de entrada para a view atraves desta injeção.
+
+- Por fim caso queira usar seu scope, somente precisa realizar a decoração dela na tag que desejar.
+
+```html
+<!DOCTYPE html>
+<html ng-app="helloWorld" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Angular React</title>
+    <script src="angular.js"></script>
+    <script>
+        angular.module("hello world", [])
+        angular.module("hello world").controller("helloWorldCtrl", function ($scope) {
+            $scope.message = "hello world"
+        })
+    </script>
+</head>
+<body>
+    <div ng-controller="helloWorldCtrl">
+    </div>
+</body>
+</html>
+```
+# Conclusão
+
+Angular te permite usar a mesma estrutura que você aprendeu no inicio e te dar a possibilidade de criar tags decoradas de maneira rápida e escaváveis atraves destes pequenos modulos criados.
