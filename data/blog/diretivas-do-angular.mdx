@@ -1,0 +1,53 @@
+---
+title: 'Diretivas do AngularJS'
+date: '2023-07-19'
+tags: ['Angular', 'Guide', 'Componentes', 'Framework']
+draft: true
+summary: 'Aprenda sobre o que são diretivas e como implementar.'
+---
+
+![](https://angularjs.org/img/angularjs-for-header-only.svg)
+
+# Observações importantes
+
+Este artigo tem finalidades de facilitação para os iniciantes da tecnologia como eu, minha ideia é mostrar de um ponto de vista mais simples possível. Estou aprendendo Angular e na medida que for solidificando meus conhecimentos, registrarei atraves deste Blog
+
+# Indicações
+
+[Documentação Angularjs](https://angularjs.org/)
+
+# Diretivas
+
+Basicamente são extensões da linguagem de **HTML** que permitem a implantação de novos comportamentos de forma declarativa.
+Angular contém todos os registros de diretivas atras de procurar se existe alguma para implementar seus comportamentos
+
+## ng-app
+
+-
+
+```html
+<!DOCTYPE html>
+<html ng-app="litaTelefonica" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ng-app</title>
+    <script src="angular.js"></script>
+    <script>
+        angular.module("listaTelefone", []);
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
+            $scope.app = "Lista Telefonica"
+        })
+    </script>
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+    <div>
+        <h4 ng-bind="app"></h4>
+        {{app}}
+    </div>
+</body>
+</html>
+```
+# ng-repeat
+
+Permite a iteração sobre listas e objetos
