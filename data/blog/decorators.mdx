@@ -1,0 +1,157 @@
+---
+title: 'Decorators'
+date: '2023-07-10'
+tags: ['TypeScript', 'Guia', 'Decorators']
+draft: false
+summary: ''
+---
+
+![](./public/static/images/decorators.png)
+
+# Observações importantes
+
+Este artigo visa orientar iniciantes como eu a entender alguns conceitos de linguagem de programação usando typescript, no caso o tema abordado sera em como criar Decorators.
+
+# Indicações
+
+[Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+[Video explicativo](https://www.youtube.com/watch?v=o1gCpXdVyHE)
+
+# Introdução
+
+Decorators são uma funcionalidade em linguagens de programação, como Python e TypeScript, que permitem adicionar comportamentos ou funcionalidades extras a funções, métodos, classes ou propriedades de forma declarativa. Eles são usados para modificar o comportamento padrão de elementos do código sem a necessidade de alterar seu código-fonte subjacente. Decorators podem ser usados para adicionar metadados, realizar ações pré/pós-função, extender funcionalidades e muito mais. Eles são amplamente utilizados para criar código modular e reutilizável, especialmente em contextos como frameworks e bibliotecas.
+
+# Configuração inicial
+
+Para ativar o suporte experimental para decoradores, você deve ativar a [experimentalDecorators](https://www.typescriptlang.org/tsconfig#experimentalDecorators) opção do compilador na linha de comando ou em tsconfig.json
+
+Para linha de comando
+
+```bash
+--target ES5 --experimentalDecorators
+```
+
+tsconfig.json
+
+```ts
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "experimentalDecorators": true
+  }
+}
+```
+
+# O que é um Decorator?
+
+Decorators são funções especiais que podem ser anexadas a classes, métodos, propriedades ou parâmetros no momento da declaração. Eles frequentemente começam com o caractere reservado `@` e possuem um método de uso específico. Decorators podem ser aninhados ou usados de forma independente. Eles permitem adicionar funcionalidades extras ou modificar o comportamento do código de forma declarativa.
+
+São uma ferramenta poderosa para simplificar e aprimorar o código, permitindo criar nossos próprios decorators ou usar os disponíveis na linguagem. Neste contexto, vou mostrar como criar um exemplo de decorator personalizado para melhorar a clareza e elegância do código.
+
+# Exemplo de Decorator
+
+Para este caso iremos criar um decorator que seja capaz de verificar o tempo de execução de uma determinada função para que saibamos se aquele processo pode ser melhorado sua performace ou não.
+
+```tsx
+export function logarTempoDeExecucao() {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    return descriptor
+  }
+}
+```
+
+**target** -> Função construtora da classe no caso de que se o decorator esteja em uma classe estática, mas caso não ele retorna o [prototype](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes) daquela classe.
+
+**propertyKey** -> Retorna o nome do método como string que foi decorado.
+
+**descriptor** -> Responsável por modificar tudo do método original.
+
+Esta estrutura é a base para praticamente todos os decorators, o que falta agora é somente modificar o descriptor para que o comportamento seja alterado conforme desejar.
+
+## Modificando o descriptor
+
+```ts
+/**
+ * Função decorator capaz de retornar o tempo de execução
+ * em segundos ou em milisegundos
+ */
+export function logarTempoDeExecucao(emSegundos: boolean = false) {
+  return function (
+    target: any, 
+    propertyKey: string, 
+    descriptor: PropertyDescriptor
+    ) {
+    const metodoOriginal = descriptor.value //Sobrescreve o método original
+    descriptor.value = function (...args: any[]) /**
+     * Como não sabemos quantos parametros terão,
+     * podemos usar uma desestrutução nos argumentos
+     * para aceitas quantos valores for possivel
+     * ...args
+     * */
+    {
+      let divisor = 1
+      let unidade = 'milisegundos'
+      if (emSegundos) {
+        divisor = 1000
+        unidade = 'segundos'
+      }
+      const t1 = performance.now()
+      //Passando o contexto do método original
+      const retorno = metodoOriginal.apply(this, args)
+      const t2 = performance.now()
+      /**
+       * Atraves do elemento propertyKey criamos uma especie de envelope,
+       * cercando a função que será decorada para que
+       */
+      console.log(`${propertyKey}, 
+            tempo de execução: ${(t2 - t1) / divisor} ${unidade}`)
+      retorno
+    }
+
+    return descriptor
+  }
+}
+```
+
+# Usando o Decorator
+
+Aqui está como você pode usar o decorator `logarTempoDeExecucao` em um método:
+
+```tsx
+class ExemploUsoDecorator {
+  @logarTempoDeExecucao() 
+  // Usando o decorator personalizado
+  metodoComDemora() {
+    // Simulando uma operação demorada
+    for (let i = 0; i < 1000000000; i++) {}
+  }
+}
+```
+
+```bash
+metodoComDemora, tempo de execução: 1001.2299999975479 milisegundos
+```
+
+Decorator permite o uso do parametro da mesma maneira que as funções basicas, caso tenha voce pode simplemente chama-lo dentro como argumento.
+
+```tsx
+@logarTempoDeExecucao(true) 
+// Usando o decorator personalizado com argumento de segundos
+  metodoComDemoraEmSegundos() {
+    // Simulando uma operação demorada
+    for (let i = 0; i < 1000000000; i++) {}
+  }
+}
+```
+
+```bash
+const exemploComSegundos = new ExemploUsoDecorator();
+exemploComSegundos.metodoComDemoraEmSegundos(); // Tempo de execução em segundos
+```
+
+# Considerações Finais
+
+Decorators são uma ferramenta poderosa para aprimorar a clareza e modularidade do seu código TypeScript. Eles permitem que você adicione funcionalidades adicionais de maneira declarativa, melhorando a reusabilidade do código e facilitando a manutenção.
+
+Espero que este guia tenha ajudado você a entender melhor como criar e usar decorators em TypeScript. Se você quiser se aprofundar mais, as indicações e recursos fornecidos podem ser muito úteis.
