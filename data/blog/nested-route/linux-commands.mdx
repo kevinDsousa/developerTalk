@@ -1,0 +1,125 @@
+---
+title: Se localize usando terminal linux
+date: '2023-09-02'
+tags: ['Linux', 'Commands', 'Terminal']
+draft: true
+summary: 'Neste artigo mostrarei alguns comandos de linux e como você pode se localizar usando somente o terminal.'
+---
+
+# Introdução
+
+Linux é um sistema operacional de código aberto e baseado no kernel do Linux, desenvolvido como uma alternativa ao software proprietário. Caracterizado pela sua flexibilidade e adaptabilidade, o Linux é amplamente utilizado em uma variedade de dispositivos e ambientes, desde servidores de alto desempenho até dispositivos embarcados e computadores pessoais. Sua arquitetura modular e a possibilidade de personalização o tornam um favorito entre os desenvolvedores e administradores de sistemas, permitindo a criação de sistemas sob medida para atender às necessidades específicas. Com uma vasta comunidade de apoio, o Linux é conhecido por sua estabilidade, segurança e capacidade de executar uma ampla gama de aplicativos e serviços.
+
+# Indicações 
+
+[Comandos linux](https://www.devmedia.com.br/comandos-importantes-linux/23893)
+
+[Linuxpro - Artigo de comandos](https://www.linuxpro.com.br/dl/guia_500_comandos_Linux.pdf)
+
+[Curso em video - Linux](https://www.youtube.com/watch?v=6nN2EglOqCM&list=PLHz_AreHm4dlIXleu20uwPWFOSswqLYbV)
+
+[youtube - Diolinux](https://www.youtube.com/@Diolinux)
+
+---
+
+# Guia
+
+Diferente da estrutura base do windows, sistemas linux possuem uma estrutura de pastas diferente do que a maioria esta acostumada a ver, linux considera um modelo em árvore onde tudo se inicia na ```/``` podendo se estender a partir dela para as pastas boot, bin, home, etc, lib, usr
+
+## Etendendo cada pasta
+**/boot** -> Essa pasta contém os arquivos necessários para o processo de inicialização do sistema, como o kernel do Linux, imagens de inicialização e arquivos de configuração do gerenciador de inicialização (como o GRUB).
+
+**/bin** -> Esta é a localização dos executáveis essenciais do sistema, que são usados durante a inicialização e em situações em que outros sistemas de arquivos podem não estar montados. Contém comandos fundamentais para a operação do sistema, acessíveis por todos os usuários.
+
+**/home** -> É o diretório onde os diretórios pessoais dos usuários são criados. Cada usuário normalmente tem um diretório com o seu nome dentro desta pasta, onde podem armazenar seus arquivos pessoais e configurações.
+
+**/etc** -> Armazena arquivos de configuração do sistema e de aplicativos. Esses arquivos determinam o comportamento padrão do sistema, configurações de rede, permissões e muitos outros aspectos do funcionamento do sistema.
+
+**/lib** -> Contém bibliotecas compartilhadas usadas pelos programas no sistema. Essas bibliotecas fornecem funcionalidades compartilhadas por vários programas, economizando espaço em disco e facilitando a atualização.
+
+**/usr** -> Essa pasta é onde os programas, bibliotecas e documentação do sistema são instalados. Ela é dividida em subdiretórios, como /usr/bin para executáveis, /usr/lib para bibliotecas, /usr/share para dados compartilhados e /usr/local para software instalado localmente.
+
+Essas pastas são componentes fundamentais do sistema de arquivos do Linux e desempenham papéis cruciais no funcionamento e na organização do sistema operacional.
+
+# Comandos Básicos
+
+**touch** -> Cria arquivos, precisa passar a extensão do arquivo
+
+**rm** -> Excluir arquivos
+
+**whoamy** -> Mostra quem é o usuário
+
+**pdw** -> (Print Working Directory) Te indica qual diretório atual você esta trabalhando no momento.
+
+**clear** -> Limpa o terminal, o atalho ```ctrl``` + ```L``` tem o mesmo efeito.
+
+**ls** -> Lista os arquivos com base no diretório atual.
+
+### Variações
+O ls aceita alguns argumentos e pode acabar mudando um pouco em como essa visualização é mostrada no terminal
+
+    **ls** + **-l** -> Exibe a listagem em formato de longa listagem, mostrando informações detalhadas sobre cada arquivo ou diretório.
+
+    **ls** + **-a** -> Inclui arquivos ocultos (aqueles cujos nomes começam com um ponto ```.```) na listagem.
+
+    **ls** + **-h** -> Exibe tamanhos de arquivo de forma legível para humanos (por exemplo, KB, MB).
+
+    **ls** + **-R** -> Recursivamente lista subdiretórios e seus conteúdos.
+
+---
+
+# Comandos de navegação
+
+O comando base de navegação é o ```cd``` ele é bastante versátil podendo ser usando sozinho ou com algum caminho relativo.
+
+**cd** -> Caso digitado sozinho ele é te leva ate a area de trabalho do usuário.
+
+**cd** + ```algum caminho``` -> cd /etc. Te leva ate a pasta /etc
+
+**cd** + ```..``` -> Com base em onde você esteja ele retorna para pasta anterior
+
+Para se basear na navegação considera a seguinte estrutura de Path
+
+![](https://linuxhandbook.com/content/images/2021/04/absolute-relative-path-linux.png)
+
+---
+
+# Comandos de pasta
+
+## Criação de pastas
+
+**mkdir** + ```nome da pasta``` -> Cria uma pasta 
+
+### Variações
+
+**mkdir** + **-p** -> É utilizado no Linux para criar diretórios de forma recursiva, ou seja, ele cria todos os diretórios intermediários necessários para a criação do diretório final especificado
+
+## Remoção de pastas
+
+**rmdir** = ```nome da pasta``` -> é usado para apagar diretórios, mas é importante lembrar que ele so apaga se o diretório estiver vazio
+
+### Variações
+
+Podemos usar recursividade para apagar uma pasta que contanha arquivos dentro dela
+
+**rm** + **-r** + ```nome da pasta``` -> Exclui os arquivos a partir da pasta informada. Se tiver algo ele ira questionar se realmente quer excluir
+
+**rm** + **-rf** + ```nome da pasta``` -> Excluir tudo e se tiver algo importante, chore.
+
+---
+
+# Comandos de rede
+
+## ssh
+
+ssh(Secure Shell) é um comando para que possamos realizar conexões seguras para outros servidores de maneira criptografada.
+
+Caso você queira acessar um equipamento com o ip ```192.168.1.100```, será necessário especificar o usuário seguido de ```@``` mais o ip dele na rede.
+
+```bash
+ssh usuario_ssh@192.168.1.100
+```
+
+# Importante
+
+Vale lembrar que existem algumas formas de procurar a funcionalidade de cada comando, usando o ```--help``` ou o ``man`` é possivel ver explicações rapidas sobre o comando e o manual dele, respectivamente.
