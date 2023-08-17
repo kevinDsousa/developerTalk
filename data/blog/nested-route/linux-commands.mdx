@@ -1,8 +1,8 @@
 ---
 title: Se localize usando terminal linux
-date: '2023-09-02'
+date: '2023-08-18'
 tags: ['Linux', 'Commands', 'Terminal']
-draft: true
+draft: false
 summary: 'Neste artigo mostrarei alguns comandos de linux e como você pode se localizar usando somente o terminal.'
 ---
 
@@ -106,18 +106,104 @@ Podemos usar recursividade para apagar uma pasta que contanha arquivos dentro de
 
 **rm** + **-rf** + ```nome da pasta``` -> Excluir tudo e se tiver algo importante, chore.
 
+## Copiando pastas e arquivos
+
+**cd** + ```diretório ou conteúdo de origem``` + ```diretório ou conteúdo de destino``` -> Copia o conteúdo, lembrando que caso tenha arquivos dentro ele precisará passar a flag ```-r```. Exite uma flat ```*``` que seleciona todos os arquivos de dentro da pasta, isso ajuda na hora de selecionar os arquivos a serem movidos.
+
+## Movendo pastas e arquivos
+
+**mv** + ```diretório ou conteúdo de origem``` + ```diretório ou conteúdo de destino``` -> Movimenta o diretório ou arquivo, caso não exita, as mesmas regras do **cd** se aplica para o **mv**. Contudo alem de mover ele serve para renomear arquivos e diretórios, entao caso nao tenha o arquivo mencionado, o comando subtende que você deseja renomear.
+
 ---
 
 # Comandos de rede
 
-## ssh
+## ss
 
 ssh(Secure Shell) é um comando para que possamos realizar conexões seguras para outros servidores de maneira criptografada.
 
-Caso você queira acessar um equipamento com o ip ```192.168.1.100```, será necessário especificar o usuário seguido de ```@``` mais o ip dele na rede.
+Existem algumas variações desse comando que pode fornecer resultados para cada tipo de caso.
+
+Opções mais comuns são:
+
+ **a** -> lista todos sockets;
+
+ **r** -> resolve os endereços IPs e portas por nomes de serviços;
+
+ **n** -> não resolve os endereços IPs e portas para serviços;
+
+ **l** -> lista somente as portas abertas (LISTEN);
+
+ **e** -> mostra informações detalhadas sobre o socket;
+
+ **m** -> mostra a alocação de memória do socket;
+
+ **p** -> mostra o processo dono do socket;
+
+ **i** -> mostra estatísticas do TCP sobre o socket;
+
+ **K** -> força o fechamento de um socket;
+
+ **s** -> mostra as estatísticas da rede;
+
+ **t** -> filtra somente os pacotes TCP;
+
+ **u** -> filtra somente os pacotes UDP;
+
+ **4** -> filtra somente os pacotes IPv4;
+
+ **6** -> filtra somente os pacotes IPv6;
+
+# Caracteres coringas
+
+## Localizando arquivos
+
+Para realizar buscas com base em algum valor podemos usar o valor atravez de asteriscos por exemplo.
+
+Suponha que você queira localizar todos os arquivos que tenham o número 1, podemos ter auxilio do comando ```ls``` para listar todos os valores e colocar nosso parametro de busca entre *.
 
 ```bash
-ssh usuario_ssh@192.168.1.100
+ls *1*
+```
+
+Sendo assim teremos um retorno de todos os arquivos que contenham o valor 1 em seu nome.
+
+## Filtrando arquivos
+
+Neste caso vamos precisar filtrar todos os arquivos que tenham numeros de 1 até 5.
+
+```bash
+ls ??? [1-5]
+```
+**Resultado**
+
+```bash
+arq1 aqr2 arq3 arq5 tmp1 tmp2
+```
+
+usamos um range para passar os valores [inicial-final]
+
+OBS: o uso do coringa ```?``` indica que a busca que você esta filtrando é de somente arquivos de 3 Caracteres
+
+```bash
+ls ??? [1-5]*
+```
+
+**Resultado**
+
+```bash
+arq1 aqr2 arq3 arq50 tmp1 tmp20
+```
+
+Para finalizar se caso tenhamos interesse em filtrar somente entre o 1 e o 5 podemos alterar o comando usando a mesma estrutura com uma leve modificação.
+
+```bash
+ls arq[1,5]
+```
+**Resultado**
+
+```bash
+arq1 arq5
 ```
 
 # Importante
