@@ -1,0 +1,88 @@
+---
+title: 'Comandos para LPIC1'
+date: '2023-06-30'
+tags: ['Linux', 'Commands', 'Terminal']
+draft: true
+summary: 'Guia simples de escrita markdown, como criar de maneira rápida estruturas para Web.'
+---
+
+# Observações importantes
+
+Para fins de estudo, criei este documento para que possa estudar de maneira rápida o uso de CLI linux.
+
+# Tópico 103.1 Trabalhar com linha de comando
+
+## Estudos do shell bash
+Interpretador de linha de comandos e executar caso exista, primeiro ele analisa e depois produz um resultado na tela com base no comando informado.
+
+### Executar mais de um comando em uma linha
+Atravez da flat ```;``` é possivel adicionar mais comandos na mesma linha
+
+Ex: ```cat /proc/cpuinfo ; ls /boot ; mount```
+
+### AND lógico e OR lógico
+AND: Primeiro comando precisa ser realizado com sucesso para o segundo ser executado ```&&```<br/>
+EX: ```ls /proc && cat /etc/passwd && cat/etc/group```
+
+Neste caso os dois comandos são executados.
+---
+
+OR: So executa segundo comando se o primeiro der erro ```||```<br/>
+EX: ```ls /pro && cat /etc/passwd && cat/etc/group```
+
+Neste caso como há um erro de digitação na palavra proc, primeiro comando não é realizado.
+
+### Recurso de subtituição de comandos
+Representado por \`comando` ou ${"{comando}"}<br/>
+Util para poder inserir parte de um comando dentro de outro comando
+
+Caso queira saber qual pacote instalou determinado arquivo:
+
+#### Com dois comandos
+Ex: 
+`which ipconfig` -> Localiza onde está o comando<br/>
+`rpm -qf /sbin/ifconfig` -> Retorna o nome do pacote que instalou o arquivo
+
+----
+
+#### Com um comando
+EX: 
+`rpm -qf ${which ifconfig}` -> Shel identifica o recurso interno e executa antes do externo retornando a mesma informação
+
+
+### Tipos de comandos básicos
+
+Internos (Builtins): Comandos que fazem parte do interpretador do bash.
+
+Externos: Comandos que são armazenados no HD, precisam ser informados seu caminho absoluto.
+
+![](../../public/static/images/shellposition.png)
+
+```type``` + algum comando -> Verifica se o comando passado é interno ou externo.
+
+```chsh``` -l -> Lista todos os shells presente no sistema.<br/>
+obs: o mesmo resultado pode ser visto usando; ```cat /etc/shells```.
+
+```alias``` -> Permite verificar os apelidos para comandos.<br/>
+Ex: ```alias disco_free="df -hT"``` 
+
+### Comandos de históricos
+
+Existe um recurso de terminal que armazena todos os comandos digitados a fim de facilitar o reuso dos mesmos, usando as ↑ ou ↓.
+Este arquivo fica armazenados em um arquivo localizado no perfil do usuário no `/root`.
+
+## Comandos
+
+```history``` -> Mostra os comandos usandos, ficam armazenados no **bash/history**.
+
+```!11``` -> Executa o comando com base na linha do arquivo **history**.
+
+```!i``` -> Executa o ultimo comando usando com a letra I.
+
+```history -c``` -> Apaga o historico de comandos.
+
+`$HISTFILE` -> Variavel de ambiente que mostra onde que estão armazendos o historico de comandos do usuário
+
+`$HISTSIZE` -> Variavel que define a quantidade maxima que será armazenada na memória.
+
+`$HISTFILESIZE` -> Variavel que mostra o número maximo que ficarão armazenado no history.
