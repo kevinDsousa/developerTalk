@@ -1,5 +1,11 @@
 const projectsData = [
   {
+    title: 'Games Api',
+    description: `Criei uma api de jogos de videogame usando algumas tecnologias como o nest, typescript, mongoose docker. Um backend onde persiste os dado, tratamento de erros e CRUD completo`,
+    imgSrc: '/static/images/gamesApi.png',
+    href: 'https://github.com/kevinDsousa/Games_API',
+  },
+  {
     title: 'LinkTree',
     description: `Projeto criado com Nextjs e Prismic para fins de estudo, criei uma simples interface e integrei com o CMS para que as alterações do código pudessem ser feitas sem permitir interação do usuário com o código.`,
     imgSrc: '/static/images/nextprismic.png',
