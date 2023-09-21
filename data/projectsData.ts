@@ -1,5 +1,11 @@
 const projectsData = [
   {
+    title: 'Café Flix',
+    description: `Desafio realizado pela empresa Diamond Solutions, criei uma interface usando AngularJS para consumir uma API de filmes`,
+    imgSrc: '/static/images/cafeflix.png',
+    href: 'https://cafe-flix.vercel.app/',
+  },
+  {
     title: 'Games Api',
     description: `Criei uma api de jogos de videogame usando algumas tecnologias como o nest, typescript, mongoose docker. Um backend onde persiste os dado, tratamento de erros e CRUD completo`,
     imgSrc: '/static/images/gamesApi.png',

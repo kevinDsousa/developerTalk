@@ -3,5 +3,297 @@ title: 'Comandos para LPIC1'
 date: '2023-09-11'
 tags: ['Linux', 'Commands', 'Terminal']
 draft: false
-summary: 'Topico 103.1 Lpic1.'
+summary: 'Topico 103.2 Lpic1.'
 ---
+
+# Observações importantes
+
+Para fins de estudo, criei este documento para que possa estudar de maneira rápida o uso de CLI linux.
+
+## Comandos para processar fluxo de texto
+
+`cat` -> Mostra conteúdo de arquivos
+
+ex: <br/>
+`cat /etc/group` -> Lê o arquivo group<br/>
+`cat < /etc/passwd` -> Redireciona o arquivo para entrada padrão do cat <br/>
+`cat -n /etc/passwd` -> Enumera com linhas (até as linhas em branco)<br/>
+`cat -b /etc/passwd` -> Enumera com linhas (sem as linhas em branco)<br/>
+`cat /etc/login.defs | nl`<br/> -> Enumera com linhas (sem as linhas em branco)<br/>
+
+---
+
+`nl` -> Enumera as linhas de um arquivo
+
+ex: <br/>
+`nl /etc/login.defs` -> Enumera com linhas (sem as linhas em branco)<br/>
+
+---
+
+`wc` -> Conta a quantidade de linhas palavras e caracteres de um arquivo
+
+ex:<br/>
+`wc -l /etc/passwd` -> Exibe a quantidade de linhas do arquivo passwd<br/>
+`wc -w /etc/passwd` -> Exibe a quantidade de palavras do arquivo passwd<br/>
+`wc -m /etc/passwd` -> Exibe a quantidade de caracteres do arquivo passwd<br/>
+
+---
+
+`sort` -> Exibe o conteúdo dos arquivos em ordem alfabética
+
+ex: Imagine o arquivo<br/>
+```.txt
+Slackware
+Debian
+CentOs
+RedHat
+Opensuse
+Ubuntu
+Fedora
+```
+### Por meio do comando `sort` é possivel organizar o arquivo por ordem alfabetica
+
+`sort /tmp/distros.txt` -> Comando + path do arquivo
+
+```.txt
+CentOs
+Debian
+Fedora
+Opensuse
+RedHat
+Slackware
+Ubuntu
+```
+
+### Por meio do comando `sort` com flag `-r` é possivel organizar em ordem inversa
+
+`sort -r /tmp/distros.txt` -> Comando + path do arquivo
+
+```.txt
+Ubuntu
+Slackware
+RedHat
+Opensuse
+Fedora
+Debian
+CentOs
+```
+
+---
+
+`less` -> Passa um path e exite o contúdo paginado do arquivo
+
+ex:<br/>
+`less /etc/login.defs` -> Realiza a paginação do login.defs
+
+**↓** -> Desce uma linha<br/>
+**↑** -> Sobe uma linha<br/>
+**pgUp** | Up -> Vai para primeira página<br/>
+**pgDown** | End -> Vai para ultima pagina<br/>
+**Enter** -> Avança as linhas<br/>
+**n** -> Apos pesquisa de palavras com auxilio do cli **: + palavra chave** avança para o proximo match<br/>
+**q** -> Sai do less<br/>
+
+---
+
+`head` ->  Mostra as primeiras linhas de arquivo. Por default as 10 primeiras
+
+ex:<br/>
+
+`head /etc/passwd` -> Retorna as 10 primeiras linhas do passwd<br/>
+`head -n 20 /etc/passwd /etc/group` -> Retorna as 20 primeiras linhas do passwd e group<br/>
+`head -n 20 /etc/passwd | nl` -> Retorna as 20 primeiras linhas do passwd e manda pro nl que enumera<br/>
+`head -n -20 /etc/passwd` -> Retorna todo arquivo menos as 20 ultimas linhas<br/>
+`cat -n /etc/passwd | head -n -20` -> Retorna de forma enumerada todo arquivo menos as 20 ultimas linhas<br/>
+
+---
+
+`tail` -> Mostra as ultimas linhas de arquivos. Por default as 10 ultimas como no `head`
+
+ex:<br/>
+
+`nl /etc/group | tail -n 15` -> Mostra as ultimas 15 linhas do group<br/>
+`tail -f /var/log/messages` -> Monstra de maneira continua conforme atualização do arquivo<br/>
+`tail -n +15 /var/log/messages` -> Mostra a partir da linha 15 ate o final<br/>
+
+---
+
+`uniq` -> Montra o conteudo do arquivo mas somente as linhas que nao se repetem se estiverem em sequência
+
+```.txt
+Debian
+CentOs
+RedHat
+Opensuse
+Fedora
+CentOs
+Debian
+```
+
+`uniq /tmp/distros.txt` -> Tentar usar o comando, é observado que não há mudança
+
+```.txt
+Debian
+CentOs
+RedHat
+Opensuse
+Fedora
+CentOs
+Debian
+```
+
+Não suprime pois não está sequencial
+
+## Usando o comando sort para organizar
+
+`sort /etc/distros.txt | uniq` -> Organiza alfabeticamente e depois aplica o uniq
+
+```.txt
+CentOs
+Debian
+Fedora
+Opensuse
+RedHat
+```
+
+---
+
+`uniq -d` -> Exibe na tela as linhas que se repetem
+
+ex Com base no mesmo caso:<br/>
+
+`sort /tmp/distros.txt | uniq -d`
+
+```.txt
+CentOs
+Debian
+```
+
+---
+
+`uniq -c` -> Exibe na tela a contagem de repetições de cada palavra
+
+ex Com base no mesmo caso:<br/>
+
+`sort /tmp/distros.txt | uniq -c`
+
+
+```.txt
+2 CentOs
+2 Debian
+1 Fedora
+1 Opensuse
+1 RedHat
+```
+
+---
+
+`od` -> Usado para mostrar conteúdo de textos em outro formato **hexadecimal**, **octal**...
+
+ex:<br/>
+
+`od tmp/distros.txt` -> Por default exibe em octal<br/>
+`od -tx tmp/distros.txt` -> Por em hexadecimal<br/>
+
+---
+
+`paste` -> Exibe uma linha de um arquivo e exibe ao lado de outro arquivo
+
+ex:<br/>
+
+`paste etc/group /etc/gshadow` -> Exibe as linhas do group e gshadow lado a lado
+
+---
+
+`split` -> Divide um arquivo em outros menores
+
+ex:<br/>
+
+`split -l3 tmp/distros.txt /tmp/distros_partes_` -> flag l3 é a condição de que particione o distros sempre a partir da 3ª linha e mande para um aquivo chamado distros_partes_
+
+### Uni-los novamente
+
+`cat distros_partes_* > distros_copy.txt` -> Cat ler o conteúdo e manda para o copy
+
+---
+
+## Comandos para gerar hash
+
+`md5sum` -> Mais antigo mas gera um hash<br/>
+`sha256sum` -> Da mesma forma do md5sum mas com um algoritmo melhor
+`sha512sum` -> Da mesma forma do sha256sum mas com um algoritmo melhor
+
+ex:<br/>
+
+`md5sum /tmp/services` -> Gera uma sequência de digitos de maneira unica para este arquivo<br/>
+`sha256sum /tmp/services` -> Gera uma sequência de digitos de maneira unica para este arquivo<br/>
+`sha512sum /tmp/services` -> Gera uma sequência de digitos de maneira unica para este arquivo<br/>
+
+---
+
+## Processar fluxos
+
+`sed` -> Editor de texto não interativo
+
+ex:<br/>
+
+`sed '/systemd/BOOT/' /etc/passwd` -> Busca systemd no passwd e troca por BOOT. Importante mostrar que ele so altera a primeira palavra que ele der match por linha, se tiver outras ele não altera.<br/>
+`sed '|systemd|BOOT|' /etc/passwd` -> Com o Pipe tambem tem o mesmo resultado.<br/>
+`sed '|systemd|BOOT|2' /etc/passwd` -> com o flag 2 ele busca pela segunda palavra e substitui.<br/>
+`sed 's/nologin/SHEEL INVALIDO/g' /etc/passwd` -> Com flag **g** ele substitui todas que for localizadas<br/>
+
+## sed para deletar linhas
+
+ex:<br/>
+
+`sed '1,25d' /etc/passwd` -> Deletar a linha 1 até a 25, d: Informa que deleta o que encontrar do passwd, Mas ele so altera se tiver uma flag de **i**<br/>
+`sed -i '1,25d' /etc/passwd` -> Deleta e altera conforme o comando acima    
+
+---
+
+## Conversão usando tr
+
+`tr` -> Converte ou deleta caracteres, por padrão sempre envia comandos para sua entrada
+
+ex:<br/>
+
+`echo 'texto qualquer' | tr 'a-z' 'A-Z'` -> a-z: tudo que localizar entre a e z, substitui para os caracteres entre A e Z<br/>
+`echo 'texto qualquer' | tr '[:lower:]''[:upper:]'` -> Mesmo resultado<br/>
+`echo 'texto qualquer com espaços | tr ' ' '_'` -> Substitui os espaços por underline<br/>
+`echo 'texto qualquer com espaços | tr -d ' '` -> Apaga todos os espaços da frase<br/>
+`echo 'texto qualquer com espaços | tr -d [:blank:]` -> Apaga todos os espaços da frase<br/>
+
+---
+
+`cut` -> Usado para cortar partes do texto com base em um caractere ou um intervalo de caracteres
+
+ex:<br/>
+
+`cut -d':' -f 1,3 /etc/passwd` -> -d:'Delimitador de procura', -f 1,3 Indica que so ira mostrar a primeira e a terceira coluna<br/>
+`cut -c1,6 /etc/group` -> -c1,6 Corta do 1 ao 6 caractere e mostra somente o resultado
+
+---
+
+## Comandos de visualização de arquivos comprimidos
+
+`bzcat` -> Mostra o conteúdo do arquivo comprimido por bzcat (bz2)
+
+ex:<br/>
+
+`xzcat protocolos.txt.bz2`
+
+---
+
+`xzcat` -> Mostra o conteúdo do arquivo comprimido por xzcat
+
+ex:<br/>
+
+`xzcat protocolos.txt.xz`
+
+---
+
+`zcat` -> Mostra o conteúdo do arquivo comprimido por zcat (zip)
+
+ex:<br/>
+
+`xzcat protocolos.txt.gz`
