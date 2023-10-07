@@ -1,0 +1,191 @@
+---
+title: 'Comandos para LPIC1'
+date: '2023-10-02'
+tags: ['Linux', 'Commands', 'Terminal']
+draft: false
+summary: 'Topico 103.3 Lpic1.'
+---
+
+# Observações importantes
+
+Para fins de estudo, criei este documento para que possa estudar de maneira rápida o uso de CLI linux.
+
+## gerenciamento básico de arquivos
+
+`file` -> Determina o tipo de arquivo atraves de uma consulta
+
+ex: <br/>
+`file /dev/sda` -> Retorna o tipo. `block special`: Arquivo que identifica um tipo de armazenamento.<br/>
+`file /dev/input/mice` -> Retorna o tipo. `character special`: Arquivo de caractere, entrada e saida de informações.<br/>
+`file /etc/rc.d/init.d/halt` -> Retorna o tipo. `script shell`: Script feito em shell.<br/>
+
+---
+
+`cd` -> Comando interno do shell usado para alterar entre diretórios. 
+
+ex: <br/>
+`cd /opt` -> Navega para o **/opt**<br/>
+`cd /usr/share/mam` -> Navega para o **/man** com caminho absoluto<br/>
+`cd ~` -> Retorna para base do diretório.<br/>
+`cd ~usuario` -> Vai para a base do diretorio do usuario.<br/>
+`cd ..` -> Desce um nivel com base no diretório atual.<br/>
+`cd -` -> Informa que esta acessando o diretorio anterior<br/>
+
+---
+
+`ls` -> Função de listar o conteúdo
+
+ex: <br/>
+`ls` -> Sem argumento ele lista o diretorio atual.<br/>
+`ls -l` -> Lista o diretorio atual com detalhes (tamanho, permisões, data de modificação).<br/>
+`ls -lh` -> Lista o diretorio atual com detalhes (tamanho, permisões, data de modificação) tamanho mostrado em megabytes.<br/>
+`ls -la` -> Lista o diretorio atual com detalhes e os arquivos ocultos tambem sao mostrados.<br/>
+
+---
+
+`touch` -> Cria arquivos e alterada data dos arquivos
+
+ex: <br/>
+`touch arquivo.txt` -> Cria um arquivo.txt<br/>
+`touch -m arquivo.txt` -> <br/> Altera a data e hora do arquivo para a atual.<br/>
+
+---
+
+`mv` -> Move arquivos ou renomeia
+
+ex: <br/>
+`mv -m passdw cadastro` -> renomeia o arquivo passwd para cadastro<br/>
+`mv -v arquivo.txt arquivos` -> Move o arquivo.txt para o diretorio arquivos<br/>
+`mv -i arquivo.txt arquivos` -> Abre um prompt interativo pela flag -i para as operações<br/>
+`mv -f argumento.txt arquivo` -> Força a mudança do arquivo, sobrescrevendo o mesmo <br/>
+
+---
+
+`cp` -> Cria copias de diretórios ou arquivos
+
+ex: <br/>
+`cp -m passdw cadastro` -> copia o arquivo passwd para cadastro<br/>
+`cp -v arquivo.txt arquivos` -> copia o arquivo.txt para o diretorio arquivos<br/>
+`cp -vR arquivo.txt arquivos` -> copia o arquivo.txt para o diretorio arquivos de forma recursiva<br/>
+`cp -i arquivo.txt arquivos` -> Abre um prompt interativo pela flag -i para as operações<br/>
+`cp -f argumento.txt arquivo` -> Força a copia do arquivo, sobrescrevendo o mesmo <br/>
+`cp -vb argumento.txt arquivo` -> Cria um backup de segunrança, caso ja exista no destino com o mesmo nome<br/>
+`cp -a argumento.txt arquivo` -> Salva de forma recursiva preservando os atributos (data/hora/permissões). Equivale a -dR --preserve=all<br/>
+
+---
+
+`mkdir` -> Criar diretórios, precisa ter permissão para criar
+
+ex: <br/>
+`mkdir nova_pasta` -> Cria nova_pasta<br/>
+`mkdir -v nova_pasta` -> Cria nova_pasta mostrando o que foi feito<br/>
+`mkdir -vm 750` -> m = define as permissões. 7 permissão total pro acesso, 5 permissão de ler e acessar o grupo, 0 todos os outros sem permissão de acesso<br/>
+`mkdir -vp nova_pasta/nova_pasta2` -> Cria nova_pasta e nova_pasta2 mostrando o que foi feito de forma recursiva<br/>
+
+---
+
+`rm` -> Remove diretórios
+
+ex: <br/>
+`rm -i arquivos/cadastro` -> Remove de maneira interativa cadastro.txt <br/>
+`rm -f arquivos/cadastro.txt` -> Remove de maneira forçada o cadastro.txt<br/>
+`rm -R arquivos/diretorio` -> De forma recursiva remove o diretório e tudo que há dentro dele.<br/>
+`rm -Rf arquivos/diretorio` -> De forma recursiva remove o diretório e tudo que há dentro dele forçado.<br/>
+`rmdir -Rf arquivos/diretorio` -> Somente remove diretórios vazios.<br/>
+
+---
+
+`find` -> Realiza buscas em diretórios ou arvores de diretórios de forma especifica
+
+ex: <br/>
+`find -name` -> Busca arquivos/diretórios com nome especifico<br/>
+`find /etc -name 'yum.conf'` -> Busca arquivo yum.conf<br/>
+`find /etc -name '*.conf'` -> Busca todos os arquivos que possuem terminação .conf dentro de /etc<br/>
+`find /etc -iname '*.conf'` -> Busca todos os arquivos que possuem terminação .conf dentro de /etc mas ignorando o case sensitive buscando tambem todos os .Conf<br/>
+`find /etc -name '*.conf' -type l` -> Busca todos os arquivos que possuem terminação .conf dentro de /etc que são links simbolicos<br/>
+`find /dev -type b` -> flag **b** busca arquivos de tipo bloco, busca sera dentro de dev todos os arquivos que possuem tipagem bloco (armazenamento)<br/>
+
+### cmin
+
+Verificar alterações nos arquivos (se houve) em minutos
+
+`find . -cmin 3` -> cmin verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita ate 3 minutos.<br/>
+`find . -cmin -3` -> cmin verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita antes de 3 minutos.<br/>
+`find . -cmin +3` -> cmin verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita mais de 3 minutos.<br/>
+
+### time
+
+Verificar alterações nos arquivos (se houve) em dias
+
+`find . -time 3` -> time verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita ate 3 dias.<br/>
+`find . -time -3` -> time verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita antes de 3 dias.<br/>
+`find . -time +3` -> time verifica no diretorio os arquivos que tiveram status alterados (permissoes), flag **3** solicita depois de 3 dias.<br/>
+
+### atime
+
+Verificar se houve acesso nos arquivos em dias
+
+`find . -atime 3` -> atime verifica no diretorio os arquivos que foram acessados, flag **3** solicita ate 3 dias.<br/>
+`find . -atime -3` -> atime verifica no diretorio os arquivos que foram acessados, flag **3** solicita antes de 3 dias.<br/>
+`find . -atime +3` -> atime verifica no diretorio os arquivos que foram acessados, flag **3** solicita depois de 3 dias.<br/>
+
+### amin
+
+Verificar se houve acesso em arquivos em minutos
+
+`find . -amin 3` -> amin verifica no diretorio os arquivos que foram acessados, flag **3** solicita ate 3 minutos.<br/>
+`find . -amin -3` -> amin verifica no diretorio os arquivos que foram acessados, flag **3** solicita antes de 3 minutos.<br/>
+`find . -amin +3` -> amin verifica no diretorio os arquivos que foram acessados, flag **3** solicita mais de 3 minutos.<br/>
+
+### mmin
+
+Verificar se teve conteúdo alterado nos ultimos minutos
+
+`find . -mmin 3` -> mmin verifica no diretorio os arquivos se teve alterações, flag **3** solicita ate 3 minutos.<br/>
+`find . -mmin -3` -> mmin verifica no diretorio os arquivos se teve alterações, flag **3** solicita antes de 3 minutos.<br/>
+`find . -mmin +3` -> mmin verifica no diretorio os arquivos se teve alterações, flag **3** solicita mais de 3 minutos.<br/>
+
+---
+
+`tar` -> Armazena dentro de um arquivo varios arquivos, realizando compreesão, gerando assim uma copia comprimida, ou extrair caso necessário.<br/>
+
+ex: <br/>
+
+`tar -cvpf backup-config-logs.tar` -> -c cria um arquivo **tar**, -v modo verboso, -p preserva as permissões, -f especificar o nome do arquivo criado (precisa passar o nome do arquivo criado)<br/>
+`tar -tf backup-config-logs.tar` -> -t verificar se os arquivos informados realmente foram copiados<br/>
+
+### Etrair arquivos
+
+Caso não informe o caminho pra onde será extraido, fica no atual.
+
+`tar -xvf backup-config-logs.tar` -> Extrai de forma verbosa e usando -f para informar o arquivo.<br/>
+`tar -xvf backup-config-logs.tar -C /tmp` -> Extrai de forma verbosa e usando -f para informar o arquivo. Usando o **-C** permite enviar para um diretorio.<br/>
+
+---
+
+`gzip` -> Realiza a compressão de arquivos<br/>
+`gunzip` -> Realiza a descompressão de arquivos<br/>
+
+ex: <br/>
+`gzip backup-config-logs.tar` -> Demora um tempo com base no tamanho do arquivo. Adiciona extensão **.gz**<br/>
+`gzip -d backup-config-logs.tar` -> Realiza a descompressão de arquivos do arquivo.<br/>
+`gzip -c backup-config-logs.tar` -> Realiza a descompressão de arquivos do arquivo mantendo o arquivo original.<br/>
+`gunzip backup-config-logs.tar` -> Realiza a descompressão de arquivos do arquivo.<br/>
+
+---
+
+`bzip2` -> Comprime e descomprime arquivo com algoritmo diferente
+
+ex: <br/>
+`bzip2 backup-config-logs.tar` -> Realiza a compressão do arquivos com extensão **.bz2**<br/>
+`bzip2 -k backup-config-logs.tar` -> Realiza a compressão do arquivos com extensão **.bz2** mas mantendo o arquivo original<br/>
+`bunzip2 backup-config-logs.tar` -> Realiza a descompressão de arquivos com a extensão **.bz2**<br/>
+
+---
+
+`xz` -> Comprime e descomprime arquivo com algoritmo diferente e melhorada
+
+ex: <br/>
+`xz backup-config-logs.tar` -> Realiza a compressão do arquivos com extensão **.xz**<br/>
+`xz -k backup-config-logs.tar` -> Realiza a compressão do arquivos com extensão **.xz** mas mantendo o arquivo original<br/>
+`unxz backup-config-logs.tar` -> Realiza a descompressão de arquivos com a extensão **.xz**<br/>
